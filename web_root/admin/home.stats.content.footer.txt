@@ -1,0 +1,69 @@
+<!-- Insert contact info on to home page of PowerSchool.  Jim Black -->
+<script type="text/template" id="home-stats-template">
+    <div class="box-round" id="contact_info">
+        <h2>Contact Info</h2>
+
+        <p>
+        <table>
+            ~[tlist_sql; select
+            (select count(t.id) from Teachers t where t.status = 1 and (t.schoolid = ~(curschoolid) or ~(curschoolid)=0)
+            and (t.schoolid = ~(curschoolid) or ~(curschoolid)=0) and upper(t.lastfirst) not like '%TEST%' and
+            upper(t.lastfirst) not like '%STAFF%') as "Total",
+            (select count(t.id) from Teachers t where t.status = 1 and t.email_addr is not null and (t.schoolid =
+            ~(curschoolid) or ~(curschoolid)=0) and upper(t.lastfirst) not like '%TEST%' and upper(t.lastfirst) not like
+            '%STAFF%' and upper(t.lastfirst) not like '%DSC%' and upper(t.lastfirst) not like '%DXATC%') as "No Email",
+            (select count(t.id) from Teachers t where t.status = 1 and ps_customfields.getcf('teachers',t.id,
+            'SMS_Number') is not null and (t.schoolid = ~(curschoolid) or ~(curschoolid)=0) and upper(t.lastfirst) not
+            like '%TEST%' and upper(t.lastfirst) not like '%STAFF%' and upper(t.lastfirst) not like '%DSC%' and
+            upper(t.lastfirst) not like '%DXATC%') as "No SMS"
+            from
+            dual;]
+            <tr class="~[evenoddrow]">
+                <td>Total Staff: ~(Total)</td>
+                <td>Email: ~(NoEmail)</td>
+                <td>Cell/Text: ~(NoSMS)</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+            [/tlist_sql]
+            ~[tlist_sql; select
+            (select count(s.id) from Students s where s.enroll_status = 0 and (s.schoolid = ~(curschoolid) or
+            ~(curschoolid)=0)) as "Total",
+            (select count(s.id) from Students s where s.enroll_status = 0 and s.guardianemail is null and (s.schoolid =
+            ~(curschoolid) or ~(curschoolid)=0)) as "No GEmail",
+            (select count(s.dcid) from Students s join GUARDIANSTUDENT gs on gs.STUDENTSDCID = s.dcid join GUARDIANS g
+            on gs.guardianid = g.FAMILYID where (s.schoolid = ~(curschoolid) or ~(curschoolid)=0) and s.enroll_status=0)
+            as "SMS"
+            from
+            dual;]
+            <tr class="~[evenoddrow]">
+                <td>Total Students: ~(Total)</td>
+                <td>No GuardianEmail: ~(NoGEmail)</td>
+                <td>Cell/Text: ~(SMS)</td>
+            </tr>
+            [/tlist_sql]
+        </table>
+        </p>
+    </div>
+    <div class="box-round" id="bulletin_items">
+        <h2>Bulletin Items -<a href="http://pstrain.washk12.org/" target="_blank"> PowerSchool Help & Information </a>
+        </h2>
+
+        <p>
+            ~[x:bulletinitems]
+        </p>
+    </div>
+</script>
+
+<script>
+    /*global $j*/
+    (function () {
+        'use strict';
+
+        var template = $j($j('#home-stats-template').html());
+        var insert = $j('#whats-new');
+        template.insertBefore(insert);
+
+    }());
+</script>
