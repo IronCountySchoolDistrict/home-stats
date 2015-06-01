@@ -1,0 +1,19 @@
+{
+  "name": "home-stats",
+  "version": "1.0.0",
+  "description": "",
+  "main": "",
+  "scripts": {
+    "test": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IronCountySchoolDistrict/home-stats.git"
+  },
+  "author": "IronCountySchoolDistrict",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/IronCountySchoolDistrict/home-stats/issues"
+  },
+  "homepage": "https://github.com/IronCountySchoolDistrict/home-stats#readme"
+}
